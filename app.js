@@ -1,18 +1,23 @@
 require ("dotenv").config()
 
 const express = require("express")
-const app = express();
-
 const connectToDB = require("./config/db.js")
 
+const app = express();
 
-app.get('/', (req,res) =>{
-    res.send("Hello from Server!")
-})
+// Express middlewares
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 
 // Initialising connection to DB
 connectToDB();
+
+const userRoute = require("./routes/userRoutes.js")
+
+
+app.use('/',userRoute)
+
 
 module.exports = app;
 

@@ -38,3 +38,22 @@ exports.createUser = async (req,res)=>{
         });
     }
 };
+
+// create route for geting all user info
+exports.getUser = async (req,res) => {
+   try {
+
+    const allUserData = await User.find({});
+    
+    res.status(200).json({
+        success : true,
+        allUserData
+    })
+   } catch (error) {
+    console.error(error);
+    res.status(400).json({
+        success : false,
+        msg : error.msg
+    })
+   }
+}

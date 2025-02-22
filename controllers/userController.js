@@ -83,3 +83,26 @@ exports.updateUser = async (req,res)=> {
         res.status(400).json()
     }
 }
+
+// create route to delete user 
+exports.deleteUser = async(req,res) =>{
+    try {
+        const deletedUser = await User.findByIdAndDelete(req.params.id);
+        const user = await User.find({})
+        if(!deletedUser){
+            throw new Error("User does not exist")
+        }
+        res.status(200).json({
+            success : true,
+            msg : "User Deleted Successfully",
+            user
+        })
+    } catch (error) {
+        console.error(`Error :${error}`)
+        res.status(400).json({
+            success : false,
+            msg : error.msg
+        })
+    }
+
+}

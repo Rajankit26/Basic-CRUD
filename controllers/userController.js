@@ -57,3 +57,29 @@ exports.getUser = async (req,res) => {
     })
    }
 }
+
+// create route to update user 
+exports.updateUser = async (req,res)=> {
+    try {
+       
+
+        const updatedUser = await User.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+    {   
+        new : true
+    }
+)
+        if(!updatedUser){
+            throw new Error("User does not exist")
+        }
+        res.status(200).json({
+            success : true,
+            msg : "user updated successfully",
+            updatedUser
+        })
+    } catch (error) {
+        console.error(`Error: ${error}`);
+        res.status(400).json()
+    }
+}
